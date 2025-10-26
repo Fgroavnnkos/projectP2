@@ -50,7 +50,9 @@ class MainActivity : AppCompatActivity() {
         button3.setOnClickListener {
             val randomIntent = Intent(this, SecondActivity::class.java)
 
-            randomIntent.putExtra("currentNumberSec", model.currentNumber.value)
+            val rand = model.currentNumber.value ?: 2
+            model.randomNumber.value = (0..rand).random()
+            randomIntent.putExtra("currentNumberSec")
 
             startActivity(randomIntent)
         }

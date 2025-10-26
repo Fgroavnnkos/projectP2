@@ -30,9 +30,9 @@ class SecondActivity : AppCompatActivity() {
 
         model.randomNumber.observe(this, nameObserver)
 
-            val rand: Int = intent.getStringExtra("currentNumberSec")?.toIntOrNull() ?: 0
+        model.randomNumber.value = intent.getIntExtra("currentNumberSec", 11)
 
-            model.randomNumber.value = (0..rand).random()
+
 
     }
 }

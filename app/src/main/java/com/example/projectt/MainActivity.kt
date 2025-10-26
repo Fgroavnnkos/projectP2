@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
             val rand = model.currentNumber.value ?: 2
             model.randomNumber.value = (0..rand).random()
-            randomIntent.putExtra("currentNumberSec")
+            randomIntent.put("currentNumberSec")
 
             startActivity(randomIntent)
         }

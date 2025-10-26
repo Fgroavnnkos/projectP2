@@ -19,7 +19,7 @@
             android:layout_width="400dp"
             android:layout_height="489dp"
             android:gravity="center"
-            android:text="@{name}"
+            android:text="0"
             android:textSize="200dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -2,16 +2,16 @@ package com.example.projectt
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import androidx.activity.viewModels
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.Button
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.example.projectt.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -27,19 +27,24 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        var currentNumber = binding.name.toString()
+        val model: SimpleViewModel by viewModels()
 
-        val button1: Button = findViewById(R.id.button1)
+        val nameObserver = Observer<String> { newName ->
+            binding.textView.text = newName
+        }
+
+        model.currentNumber.observe(this, nameObserver)
+
+        val button1 = binding.button1
 
         button1.setOnClickListener {
             Toast.makeText(this, "soobsheniye", Toast.LENGTH_SHORT).show()
         }
 
-        val button2: Button = findViewById(R.id.button2)
+        val button2 = binding.button2
 
         button2.setOnClickListener {
-            currentNumber = (currentNumber.toInt() + 1).toString()
-            binding.name = currentNumber
+            model.currentNumber.value = ((model.currentNumber.value?.toIntOrNull() + 1).toString())
         }
 
         val button3: Button = findViewById(R.id.button3)

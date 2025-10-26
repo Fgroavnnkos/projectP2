@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.activity.viewModels
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -29,8 +27,8 @@ class MainActivity : AppCompatActivity() {
 
         val model: SimpleViewModel by viewModels()
 
-        val nameObserver = Observer<String> { newName ->
-            binding.textView.text = newName
+        val nameObserver = Observer<Int> { newName ->
+            binding.textView.text = newName.toString()
         }
 
         model.currentNumber.observe(this, nameObserver)
@@ -44,48 +42,25 @@ class MainActivity : AppCompatActivity() {
         val button2 = binding.button2
 
         button2.setOnClickListener {
-            model.currentNumber.value = ((model.currentNumber.value?.toIntOrNull() + 1).toString())
+            model.plusOne()
         }
 
-        val button3: Button = findViewById(R.id.button3)
+        val button3 = binding.button3
 
         button3.setOnClickListener {
             val randomIntent = Intent(this, SecondActivity::class.java)
 
-
-            randomIntent.putExtra("currentNumberSec", currentNumber)
-
+            randomIntent.putExtra("currentNumberSec", model.currentNumber.value)
 
             startActivity(randomIntent)
         }
 
-        val button4: Button = findViewById(R.id.button4)
-        val changableText: TextView = findViewById(R.id.editTextText)
+        val button4 = binding.button4
+        val changableText = binding.editTextText.text?.toString()?.toIntOrNull() ?: 21
 
         button4.setOnClickListener {
-            currentNumber = changableText.text.toString()
-            binding.name =  currentNumber
-
+            model.currentNumber.value = changableText
         }
-
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-
-        var currentNumber = findViewById<TextView>(R.id.textView).text
-
-
-        outState?.run {
-            putString("KEY", currentNumber.toString())
-        }
-        Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show()
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        findViewById<TextView>(R.id.textView).text = savedInstanceState?.getString("KEY")
-        Toast.makeText(this, "restored", Toast.LENGTH_SHORT).show()
 
     }
 

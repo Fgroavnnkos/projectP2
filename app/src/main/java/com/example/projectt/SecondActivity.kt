@@ -30,8 +30,7 @@ class SecondActivity : AppCompatActivity() {
 
         model.randomNumber.observe(this, nameObserver)
 
-        model.randomNumber.value = intent.getIntExtra("currentNumberSec", 11)
-
+            model.randomNumber.value = intent.getIntExtra("rand", 12)
 
 
     }
